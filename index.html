@@ -1,0 +1,1225 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101616">
+  <title>Selva Dourada — Apostas Online com Wilds & Mega Spin</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #101616;
+      color: #fff7e2;
+      font-synthesis: none;
+      --gold: #f3cb73;
+      --muted: #c4c0a9;
+      --pix-green: #32bcad;
+      --diamond-cyan: #00e5ff;
+      --danger-red: #ff5252;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 50% 9%, #315c3e 0, transparent 39%),
+        radial-gradient(ellipse at 50% 110%, #633823 0, transparent 43%),
+        #101616;
+    }
+
+    button { font: inherit; }
+
+    .page {
+      width: min(100% - 36px, 680px);
+      margin: 0 auto;
+      padding: 32px 0 34px;
+    }
+
+    .title {
+      margin: 0;
+      color: #ffe8ac;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.4rem, 9vw, 4.2rem);
+      font-weight: 800;
+      letter-spacing: -.06em;
+      line-height: 1;
+      text-align: center;
+      text-shadow: 0 3px 0 #633e1c, 0 8px 26px #e6a7314d;
+    }
+
+    .subtitle {
+      margin: 10px 0 23px;
+      color: #d7d4be;
+      font-size: .9rem;
+      text-align: center;
+    }
+
+    .game {
+      overflow: hidden;
+      border: 1px solid #f8d87547;
+      border-radius: 26px;
+      background: linear-gradient(155deg, #193c30, #1d302b 58%, #30271f);
+      box-shadow: 0 25px 85px #0008, inset 0 1px #fff2;
+      transition: border-color .3s, box-shadow .3s;
+    }
+
+    .game.free-spins-active {
+      border-color: var(--gold);
+      box-shadow: 0 0 30px rgba(243, 203, 115, 0.4), inset 0 1px #fff5;
+    }
+
+    .game.mega-spin-active {
+      border-color: var(--diamond-cyan);
+      box-shadow: 0 0 35px rgba(0, 229, 255, 0.7), inset 0 1px #fff5;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 15px 19px;
+      border-bottom: 1px solid #f8d87530;
+      background: #0c1916a6;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-badge {
+      font-size: 0.8rem;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .btn-auth-trigger {
+      padding: 6px 12px;
+      border: 1px solid var(--gold);
+      border-radius: 6px;
+      background: transparent;
+      color: var(--gold);
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .wallet {
+      padding: 7px 12px;
+      border: 1px solid #f3cb7352;
+      border-radius: 999px;
+      color: #ffe3a0;
+      background: #f3cb7312;
+      font-size: .88rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .content { padding: clamp(16px, 4vw, 27px); }
+
+    .progress-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .wild-progress-container, .diamond-progress-container {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      padding: 8px 14px;
+    }
+
+    .wild-progress-container { border: 1px solid rgba(243, 203, 115, 0.3); }
+    .diamond-progress-container { border: 1px solid rgba(0, 229, 255, 0.3); }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .wild-progress-header { color: var(--gold); }
+    .diamond-progress-header { color: var(--diamond-cyan); }
+
+    .progress-bar {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .wild-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #e4a935, #ffe68f);
+      transition: width 0.3s ease;
+      box-shadow: 0 0 8px var(--gold);
+    }
+
+    .diamond-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00b0ff, #80d8ff);
+      transition: width 0.3s ease;
+      box-shadow: 0 0 8px var(--diamond-cyan);
+    }
+
+    .reels-frame {
+      position: relative;
+      padding: clamp(8px, 2.5vw, 15px);
+      border: 2px solid #e8ba5b;
+      border-radius: 20px;
+      background: linear-gradient(145deg, #846130, #4a391f 45%, #725127);
+      box-shadow: inset 0 0 0 2px #fff2a32e, 0 9px 26px #0005;
+    }
+
+    .reels {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(5px, 1.4vw, 9px);
+      overflow: hidden;
+      padding: clamp(7px, 2vw, 12px);
+      border-radius: 12px;
+      background: linear-gradient(#fff9e9, #eadcb9);
+      box-shadow: inset 0 5px 16px #47351e4a;
+    }
+
+    .reel {
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      gap: clamp(5px, 1.4vw, 9px);
+      min-width: 0;
+    }
+
+    .symbol {
+      display: grid;
+      aspect-ratio: 1 / 1.08;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid #c9b986;
+      border-radius: clamp(8px, 2vw, 13px);
+      color: #382d1d;
+      background: linear-gradient(145deg, #fffdf5, #e8dfc7);
+      box-shadow: 0 3px 5px #62543b30, inset 0 1px #fff;
+      font-size: clamp(1.7rem, 8vw, 3.25rem);
+      line-height: 1;
+      transition: transform .18s ease, box-shadow .2s ease;
+    }
+
+    .symbol.winning {
+      z-index: 1;
+      border-color: #e2a62d;
+      background: linear-gradient(145deg, #fff1a8, #f8cd5d);
+      box-shadow: 0 0 0 2px #f4c354, 0 0 24px #ffc94a9c;
+      transform: scale(1.04);
+    }
+
+    .symbol.wild-symbol {
+      border-color: #ffb700;
+      background: linear-gradient(145deg, #ffe082, #ffb300);
+      box-shadow: 0 0 12px rgba(255, 179, 0, 0.6);
+    }
+
+    .symbol.diamond-symbol {
+      border-color: var(--diamond-cyan);
+      box-shadow: 0 0 12px rgba(0, 229, 255, 0.6);
+    }
+
+    .reel.spinning .symbol {
+      animation: tumble .1s linear infinite alternate;
+      filter: blur(1px);
+    }
+
+    @keyframes tumble {
+      from { transform: translateY(-4px); }
+      to { transform: translateY(4px); }
+    }
+
+    .status {
+      min-height: 29px;
+      margin: 17px 0;
+      color: #fff2ce;
+      font-size: .94rem;
+      font-weight: 650;
+      text-align: center;
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .bet-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      max-width: 340px;
+    }
+
+    .bet-control {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .bet-label {
+      color: var(--muted);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .bet-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+    }
+
+    .bet-btn {
+      width: 44px;
+      height: 48px;
+      border-radius: 12px;
+      background: #1e312a;
+      border: 1px solid #f2d07c42;
+      color: #ffe3a0;
+      font-size: 1.4rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: background .15s, transform .1s;
+      user-select: none;
+    }
+
+    .bet-btn:hover:not(:disabled) { background: #2a443a; }
+    .bet-btn:active:not(:disabled) { transform: scale(.95); }
+    .bet-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+    .bet-input {
+      flex: 1;
+      height: 48px;
+      padding: 0 10px;
+      border: 1px solid #f2d07c42;
+      border-radius: 12px;
+      color: #fff5d8;
+      background: #101a17;
+      font: inherit;
+      font-size: 1.05rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      text-align: center;
+      transition: border-color .2s;
+    }
+
+    .bet-input:focus { outline: none; border-color: #f3cb73; }
+    .bet-input::-webkit-inner-spin-button,
+    .bet-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    .bet-input[type=number] { -moz-appearance: textfield; }
+
+    .quick-bets {
+      display: flex;
+      gap: 5px;
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .quick-bets button {
+      flex: 1;
+      min-width: 45px;
+      padding: 7px 4px;
+      border: 1px solid #f2d07c33;
+      border-radius: 8px;
+      color: #e5e0cb;
+      background: #1e312a;
+      font-size: .75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .15s, color .15s;
+    }
+
+    .quick-bets button:hover:not(:disabled) {
+      background: #2a443a;
+      color: #ffe3a0;
+      border-color: #f3cb7380;
+    }
+    .quick-bets button:disabled { opacity: .4; cursor: not-allowed; }
+
+    .spin {
+      min-width: 160px;
+      min-height: 50px;
+      padding: 0 23px;
+      border: 0;
+      border-radius: 999px;
+      color: #392816;
+      background: linear-gradient(180deg, #ffe68f, #e4a935);
+      box-shadow: 0 5px 18px #e6b94138, inset 0 1px #fff8cc;
+      font-size: 1.05rem;
+      font-weight: 850;
+      letter-spacing: .045em;
+      cursor: pointer;
+      transition: filter .15s ease, transform .15s ease;
+      margin-top: 5px;
+    }
+
+    .spin:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-1px); }
+    .spin:active:not(:disabled) { transform: translateY(1px); }
+
+    button:disabled { cursor: not-allowed; opacity: .48; }
+
+    /* PAINÉIS PIX / SAQUE */
+    .finance-tabs {
+      display: flex;
+      gap: 10px;
+      margin-top: 25px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ffffff33;
+      border-radius: 10px 10px 0 0;
+      background: #0d1714;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: #1a2c26;
+      color: #fff;
+      border-color: var(--pix-green);
+      border-bottom-color: transparent;
+    }
+
+    .finance-section {
+      padding: 20px;
+      background: linear-gradient(145deg, #1a2c26, #0d1714);
+      border: 1px solid var(--pix-green);
+      border-radius: 0 0 16px 16px;
+      box-shadow: 0 10px 30px rgba(50, 188, 173, 0.1);
+    }
+
+    .finance-panel.hidden { display: none; }
+
+    .deposit-values {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .deposit-val-btn {
+      padding: 8px 4px;
+      border: 1px solid var(--pix-green);
+      border-radius: 8px;
+      background: #101a17;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .deposit-val-btn:hover, .deposit-val-btn.active {
+      background: var(--pix-green);
+      color: #000;
+    }
+
+    .deposit-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+
+    .deposit-form input {
+      height: 40px;
+      padding: 0 10px;
+      border-radius: 8px;
+      border: 1px solid #f2d07c42;
+      background: #101a17;
+      color: #fff;
+      font: inherit;
+    }
+
+    .pix-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #ffffff0a;
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .pix-key {
+      font-family: monospace;
+      font-size: 0.95rem;
+      font-weight: bold;
+      color: #fff;
+      letter-spacing: 0.5px;
+      word-break: break-all;
+      text-align: center;
+    }
+
+    .action-btn {
+      background: var(--pix-green);
+      color: #000;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 0.9rem;
+      width: 100%;
+    }
+
+    .withdraw-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+
+    .withdraw-form input, .withdraw-form select {
+      height: 40px;
+      padding: 0 10px;
+      border-radius: 8px;
+      border: 1px solid #f2d07c42;
+      background: #101a17;
+      color: #fff;
+      font: inherit;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .modal-overlay.hidden { display: none; }
+
+    .modal-card {
+      background: #193c30;
+      border: 2px solid var(--gold);
+      border-radius: 16px;
+      padding: 24px;
+      width: min(90%, 360px);
+      box-shadow: 0 10px 40px #000;
+    }
+
+    .modal-card h2 {
+      margin: 0 0 15px;
+      color: var(--gold);
+      font-size: 1.3rem;
+      text-align: center;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .form-group input {
+      height: 40px;
+      padding: 0 10px;
+      border-radius: 8px;
+      border: 1px solid #f2d07c42;
+      background: #101a17;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    .btn-submit {
+      width: 100%;
+      height: 44px;
+      margin-top: 10px;
+      border: 0;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #ffe68f, #e4a935);
+      color: #392816;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .paytable {
+      margin-top: 21px;
+      padding: 13px 15px;
+      border: 1px solid #ffffff1c;
+      border-radius: 14px;
+      background: #0c171480;
+    }
+
+    .paytable h2 {
+      margin: 0 0 9px;
+      color: #e8cf8e;
+      font-size: .69rem;
+      letter-spacing: .13em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .payouts {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px 15px;
+      color: #e5e0cb;
+      font-size: .76rem;
+    }
+
+    .payouts b { color: #ffdf91; }
+  </style>
+</head>
+<body>
+  <!-- MODAL LOGIN / CADASTRO -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-card">
+      <h2 id="modalTitle">Entrar na Conta</h2>
+      <form id="authForm">
+        <div class="form-group">
+          <label for="username">Usuário / E-mail</label>
+          <input type="text" id="username" required placeholder="Digite seu usuário">
+        </div>
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" id="password" required placeholder="Digite sua senha">
+        </div>
+        <button type="submit" class="btn-submit" id="btnSubmit">ENTRAR</button>
+      </form>
+    </div>
+  </div>
+
+  <main class="page">
+    <h1 class="title">Selva Dourada</h1>
+    <p class="subtitle">Apostas Online com Pagamento Pix</p>
+
+    <section class="game" id="gameContainer" aria-label="Caça-níquel">
+      <header class="topbar">
+        <div class="user-info">
+          <span class="user-badge" id="userDisplay">Visitante</span>
+          <button class="btn-auth-trigger" id="btnAuth">Login</button>
+        </div>
+        <span class="wallet" id="wallet" aria-live="polite">Saldo: R$ 0,00</span>
+      </header>
+
+      <div class="content">
+        <!-- BARRAS DE PROGRESSO -->
+        <div class="progress-section">
+          <div class="wild-progress-container">
+            <div class="progress-header wild-progress-header">
+              <span>⭐ Progresso Wild (15 Wilds = 10 Giros Grátis)</span>
+              <span id="wildCountText">0 / 15</span>
+            </div>
+            <div class="progress-bar">
+              <div class="wild-progress-fill" id="wildProgressFill"></div>
+            </div>
+          </div>
+
+          <div class="diamond-progress-container">
+            <div class="progress-header diamond-progress-header">
+              <span>💎 Progresso Diamante (8 Diamantes = 1 Mega Spin)</span>
+              <span id="diamondCountText">0 / 8</span>
+            </div>
+            <div class="progress-bar">
+              <div class="diamond-progress-fill" id="diamondProgressFill"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROLETA / REELS -->
+        <div class="reels-frame">
+          <div class="reels" id="reels" aria-label="Quatro colunas de símbolos">
+            <div class="reel"></div><div class="reel"></div><div class="reel"></div><div class="reel"></div>
+          </div>
+        </div>
+
+        <p class="status" id="status" role="status">Faça login para jogar.</p>
+
+        <div class="controls">
+          <div class="bet-area">
+            <div class="bet-control">
+              <span class="bet-label">Aposta por giro (R$)</span>
+              <div class="bet-wrapper">
+                <button class="bet-btn" id="bet-minus" type="button">−</button>
+                <input class="bet-input" id="bet-input" type="number" value="0.10" step="0.10" min="0.10" max="500.00" inputmode="decimal">
+                <button class="bet-btn" id="bet-plus" type="button">+</button>
+              </div>
+            </div>
+            <div class="quick-bets">
+              <button type="button" id="btn-min" data-val="0.10">Min</button>
+              <button type="button" data-val="0.10">R$ 0,10</button>
+              <button type="button" data-val="0.50">R$ 0,50</button>
+              <button type="button" data-val="1.00">R$ 1,00</button>
+              <button type="button" data-val="5.00">R$ 5,00</button>
+              <button type="button" id="btn-max" data-val="500.00">Max</button>
+            </div>
+          </div>
+
+          <button class="spin" id="spin" type="button" disabled>GIRAR</button>
+        </div>
+
+        <!-- ABAS FINANCEIRAS -->
+        <div class="finance-tabs">
+          <button class="tab-btn active" id="tabDeposit">Depósito Pix</button>
+          <button class="tab-btn" id="tabWithdraw">Saque Pix</button>
+        </div>
+
+        <section class="finance-section">
+          <!-- PAINEL DE DEPÓSITO -->
+          <div class="finance-panel" id="panelDeposit">
+            <form class="deposit-form" id="depositForm">
+              <label style="font-size: 0.8rem; color: var(--muted); text-align: center;">Escolha o valor do depósito:</label>
+              <div class="deposit-values">
+                <button type="button" class="deposit-val-btn active" data-val="10">R$ 10</button>
+                <button type="button" class="deposit-val-btn" data-val="20">R$ 20</button>
+                <button type="button" class="deposit-val-btn" data-val="50">R$ 50</button>
+                <button type="button" class="deposit-val-btn" data-val="100">R$ 100</button>
+              </div>
+              <input type="number" id="depositAmount" step="1" min="5" value="10" placeholder="Outro Valor (R$)" required>
+              <input type="text" id="depositPayerName" placeholder="Nome Completo ou CPF do Pagador" required>
+
+              <div class="pix-box">
+                <span class="pix-key" id="pixKey">ebbe13eb-672b-4def-b10f-bc742ed83597</span>
+              </div>
+              <button type="button" class="action-btn" id="copyPix" style="margin-bottom: 8px;">COPIAR CHAVE PIX</button>
+              <button type="submit" class="action-btn" style="background: var(--gold);">CONFIRMAR DEPÓSITO E LIBERAR SALDO</button>
+            </form>
+          </div>
+
+          <!-- PAINEL DE SAQUE -->
+          <div class="finance-panel hidden" id="panelWithdraw">
+            <form class="withdraw-form" id="withdrawForm">
+              <select id="pixKeyType" required>
+                <option value="phone">Telefone (Celular)</option>
+                <option value="cpf">CPF / CNPJ</option>
+                <option value="email">E-mail</option>
+                <option value="random">Chave Aleatória</option>
+              </select>
+              <input type="text" id="withdrawPixKey" required placeholder="Digite sua Chave Pix">
+              <input type="number" id="withdrawAmount" step="0.10" min="1.00" required placeholder="Valor do Saque (R$)">
+              <button type="submit" class="action-btn" style="background: var(--gold);">SOLICITAR SAQUE VIA PIX</button>
+            </form>
+          </div>
+        </section>
+
+        <section class="paytable" aria-label="Tabela de prêmios">
+          <h2>Linhas Pagadoras: Horizontais e Diagonais (⭐ Wild substitui tudo | 💎 8 Diamantes nos giros grátis = 1 Mega Spin!)</h2>
+          <div class="payouts">
+            <span>🍃 ×3 <b>1.5×</b></span>
+            <span>🍊 ×3 <b>2.5×</b></span>
+            <span>🌙 ×3 <b>4×</b></span>
+            <span>💎 ×3 <b>8×</b></span>
+            <span>🦊 ×3 <b>15×</b></span>
+            <span>⭐ <b>WILD</b></span>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const ROWS = 3;
+      const COLUMNS = 4;
+      const MIN_BET = 0.10;
+      const MAX_BET = 500.00;
+      const WILD_GOAL = 15;
+      const DIAMOND_GOAL = 8;
+      
+      let currentUser = null;
+      let credits = 0.00; // Saldo inicial zerado
+      let bet = 0.10;
+      let spinning = false;
+      let wildCount = 0;
+      let diamondCount = 0;
+      let freeSpinsRemaining = 0;
+      let megaSpinsRemaining = 0;
+      let cells = [];
+      let reelTimers = [];
+
+      // Símbolos ajustados para margem de retorno de ~25%
+      const SYMBOLS = [
+        { icon: "🍃", weight: 38, multiplier: 1.5, name: "folhas", isWild: false, isDiamond: false },
+        { icon: "🍊", weight: 30, multiplier: 2.5, name: "frutas", isWild: false, isDiamond: false },
+        { icon: "🌙", weight: 18, multiplier: 4, name: "luas", isWild: false, isDiamond: false },
+        { icon: "💎", weight: 8, multiplier: 8, name: "gemas", isWild: false, isDiamond: true },
+        { icon: "🦊", weight: 4, multiplier: 15, name: "raposas", isWild: false, isDiamond: false },
+        { icon: "⭐", weight: 2, multiplier: 0, name: "wild", isWild: true, isDiamond: false }
+      ];
+
+      const PAYLINES = [
+        [{r:0,c:0}, {r:0,c:1}, {r:0,c:2}, {r:0,c:3}],
+        [{r:1,c:0}, {r:1,c:1}, {r:1,c:2}, {r:1,c:3}],
+        [{r:2,c:0}, {r:2,c:1}, {r:2,c:2}, {r:2,c:3}],
+        [{r:0,c:0}, {r:1,c:1}, {r:2,c:2}, {r:2,c:3}],
+        [{r:2,c:0}, {r:1,c:1}, {r:0,c:2}, {r:0,c:3}]
+      ];
+
+      const authModal = document.querySelector("#authModal");
+      const authForm = document.querySelector("#authForm");
+      const userDisplay = document.querySelector("#userDisplay");
+      const btnAuth = document.querySelector("#btnAuth");
+      const walletElement = document.querySelector("#wallet");
+      const spinButton = document.querySelector("#spin");
+      const statusElement = document.querySelector("#status");
+      const reelElements = [...document.querySelectorAll(".reel")];
+      const betInput = document.querySelector("#bet-input");
+      const betMinus = document.querySelector("#bet-minus");
+      const betPlus = document.querySelector("#bet-plus");
+      const quickBets = document.querySelectorAll(".quick-bets button[data-val]");
+      const copyPixBtn = document.querySelector("#copyPix");
+      const pixKey = document.querySelector("#pixKey").textContent;
+      const wildProgressFill = document.querySelector("#wildProgressFill");
+      const wildCountText = document.querySelector("#wildCountText");
+      const diamondProgressFill = document.querySelector("#diamondProgressFill");
+      const diamondCountText = document.querySelector("#diamondCountText");
+      const gameContainer = document.querySelector("#gameContainer");
+      const tabDeposit = document.querySelector("#tabDeposit");
+      const tabWithdraw = document.querySelector("#tabWithdraw");
+      const panelDeposit = document.querySelector("#panelDeposit");
+      const panelWithdraw = document.querySelector("#panelWithdraw");
+      const depositForm = document.querySelector("#depositForm");
+      const withdrawForm = document.querySelector("#withdrawForm");
+      const depositValBtns = document.querySelectorAll(".deposit-val-btn");
+      const depositAmountInput = document.querySelector("#depositAmount");
+
+      const formatBRL = (val) => val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+      function pickSymbol(forceHighDiamond = false) {
+        if (forceHighDiamond && Math.random() < 0.6) {
+          return SYMBOLS.find(s => s.isDiamond);
+        }
+        const totalWeight = SYMBOLS.reduce((sum, symbol) => sum + symbol.weight, 0);
+        let roll = Math.random() * totalWeight;
+        for (const symbol of SYMBOLS) {
+          roll -= symbol.weight;
+          if (roll < 0) return symbol;
+        }
+        return SYMBOLS[0];
+      }
+
+      function makeBoard(forceHighDiamond = false) {
+        return Array.from({ length: ROWS }, () =>
+          Array.from({ length: COLUMNS }, () => pickSymbol(forceHighDiamond))
+        );
+      }
+
+      function renderBoard(board) {
+        cells = [];
+        reelElements.forEach((reel, column) => {
+          reel.replaceChildren();
+          for (let row = 0; row < ROWS; row++) {
+            const cell = document.createElement("div");
+            cell.className = "symbol";
+            if (board[row][column].isWild) cell.classList.add("wild-symbol");
+            if (board[row][column].isDiamond) cell.classList.add("diamond-symbol");
+            cell.textContent = board[row][column].icon;
+            cell.setAttribute("aria-label", board[row][column].name);
+            reel.append(cell);
+            cells.push(cell);
+          }
+        });
+      }
+
+      function renderReel(column, board) {
+        for (let row = 0; row < ROWS; row++) {
+          const symbol = board[row][column];
+          const cell = cells[row + column * ROWS];
+          let extraClass = "";
+          if (symbol.isWild) extraClass = " wild-symbol";
+          if (symbol.isDiamond) extraClass = " diamond-symbol";
+          cell.className = "symbol" + extraClass;
+          cell.textContent = symbol.icon;
+          cell.setAttribute("aria-label", symbol.name);
+        }
+      }
+
+      function rollReel(column, forceHighDiamond = false) {
+        for (let row = 0; row < ROWS; row++) {
+          const symbol = pickSymbol(forceHighDiamond);
+          const cell = cells[row + column * ROWS];
+          let extraClass = "";
+          if (symbol.isWild) extraClass = " wild-symbol";
+          if (symbol.isDiamond) extraClass = " diamond-symbol";
+          cell.className = "symbol" + extraClass;
+          cell.textContent = symbol.icon;
+          cell.setAttribute("aria-label", symbol.name);
+        }
+      }
+
+      btnAuth.addEventListener("click", () => {
+        if (currentUser) {
+          currentUser = null;
+          credits = 0.00;
+          wildCount = 0;
+          diamondCount = 0;
+          freeSpinsRemaining = 0;
+          megaSpinsRemaining = 0;
+          userDisplay.textContent = "Visitante";
+          btnAuth.textContent = "Login";
+          updateControls();
+          statusElement.textContent = "Você saiu da conta.";
+        } else {
+          authModal.classList.remove("hidden");
+        }
+      });
+
+      authForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const user = document.querySelector("#username").value;
+        if (user) {
+          currentUser = user;
+          credits = 0.00; // Saldo inicia zerado
+          userDisplay.textContent = currentUser;
+          btnAuth.textContent = "Sair";
+          authModal.classList.add("hidden");
+          statusElement.textContent = `Bem-vindo, ${currentUser}! Faça um depósito Pix para jogar.`;
+          updateControls();
+        }
+      });
+
+      depositValBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          depositValBtns.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          depositAmountInput.value = btn.dataset.val;
+        });
+      });
+
+      depositAmountInput.addEventListener("input", () => {
+        depositValBtns.forEach(b => {
+          if (b.dataset.val === depositAmountInput.value) {
+            b.classList.add("active");
+          } else {
+            b.classList.remove("active");
+          }
+        });
+      });
+
+      depositForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (!currentUser) {
+          alert("Faça login para realizar depósitos.");
+          return;
+        }
+        const val = Number(depositAmountInput.value);
+        if (isNaN(val) || val < 5) {
+          alert("Valor mínimo de depósito é R$ 5,00.");
+          return;
+        }
+        credits = Math.round((credits + val) * 100) / 100;
+        alert(`Depósito de ${formatBRL(val)} confirmado e adicionado ao seu saldo!`);
+        statusElement.textContent = `Depósito de ${formatBRL(val)} creditado com sucesso!`;
+        updateControls();
+      });
+
+      tabDeposit.addEventListener("click", () => {
+        tabDeposit.classList.add("active");
+        tabWithdraw.classList.remove("active");
+        panelDeposit.classList.remove("hidden");
+        panelWithdraw.classList.add("hidden");
+      });
+
+      tabWithdraw.addEventListener("click", () => {
+        tabWithdraw.classList.add("active");
+        tabDeposit.classList.remove("active");
+        panelWithdraw.classList.remove("hidden");
+        panelDeposit.classList.add("hidden");
+      });
+
+      withdrawForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (!currentUser) {
+          alert("Faça login para realizar saques.");
+          return;
+        }
+        const val = Number(document.querySelector("#withdrawAmount").value);
+        if (val > credits) {
+          alert("Saldo insuficiente para realizar este saque.");
+          return;
+        }
+        credits = Math.round((credits - val) * 100) / 100;
+        alert(`Solicitação de saque no valor de ${formatBRL(val)} enviada com sucesso!`);
+        document.querySelector("#withdrawAmount").value = "";
+        updateControls();
+      });
+
+      function setBetValue(val) {
+        let rounded = Math.round(val * 100) / 100;
+        if (rounded < MIN_BET) rounded = MIN_BET;
+        if (rounded > MAX_BET) rounded = MAX_BET;
+        bet = rounded;
+        betInput.value = bet.toFixed(2);
+        updateControls();
+      }
+
+      function countWildsOnBoard(board) {
+        let count = 0;
+        for (let r = 0; r < ROWS; r++) {
+          for (let c = 0; c < COLUMNS; c++) {
+            if (board[r][c].isWild) count++;
+          }
+        }
+        return count;
+      }
+
+      function countDiamondsOnBoard(board) {
+        let count = 0;
+        for (let r = 0; r < ROWS; r++) {
+          for (let c = 0; c < COLUMNS; c++) {
+            if (board[r][c].isDiamond) count++;
+          }
+        }
+        return count;
+      }
+
+      function calculatePrize(board, isMega = false) {
+        let totalPrize = 0;
+        let winningCells = new Set();
+
+        PAYLINES.forEach(line => {
+          let targetSymbol = null;
+          for (let i = 0; i < line.length; i++) {
+            const sym = board[line[i].r][line[i].c];
+            if (!sym.isWild) {
+              targetSymbol = sym;
+              break;
+            }
+          }
+
+          if (!targetSymbol) targetSymbol = SYMBOLS.find(s => s.icon === "🦊");
+
+          let matchCount = 0;
+          for (let i = 0; i < line.length; i++) {
+            const sym = board[line[i].r][line[i].c];
+            if (sym.isWild || sym.icon === targetSymbol.icon) {
+              matchCount++;
+            } else {
+              break;
+            }
+          }
+
+          if (matchCount >= 3) {
+            let mult = targetSymbol.multiplier;
+            if (matchCount === 4) mult *= 1.2;
+            if (isMega) mult *= 10;
+
+            totalPrize += bet * mult;
+            for (let i = 0; i < matchCount; i++) {
+              winningCells.add(`${line[i].r},${line[i].c}`);
+            }
+          }
+        });
+
+        if (isMega && totalPrize === 0) {
+          totalPrize = bet * 50;
+        }
+
+        return {
+          prize: Math.round(totalPrize * 100) / 100,
+          winningCells: Array.from(winningCells)
+        };
+      }
+
+      async function spin() {
+        if (spinning || !currentUser) return;
+        const isMegaSpin = megaSpinsRemaining > 0;
+        const isFreeSpin = freeSpinsRemaining > 0 && !isMegaSpin;
+
+        if (!isFreeSpin && !isMegaSpin && credits < bet) return;
+
+        spinning = true;
+
+        if (isMegaSpin) {
+          megaSpinsRemaining--;
+        } else if (isFreeSpin) {
+          freeSpinsRemaining--;
+        } else {
+          credits = Math.round((credits - bet) * 100) / 100;
+        }
+
+        const board = makeBoard(isFreeSpin || isMegaSpin);
+        cells.forEach(cell => cell.classList.remove("winning"));
+        
+        if (isMegaSpin) {
+          statusElement.textContent = `💥 MEGA SPIN DO GRANDE PRÊMIO EM ANDAMENTO!`;
+        } else if (isFreeSpin) {
+          statusElement.textContent = `GIRO GRÁTIS! Restam: ${freeSpinsRemaining}`;
+        } else {
+          statusElement.textContent = "Os símbolos estão girando…";
+        }
+        updateControls();
+
+        reelTimers = reelElements.map((reel, column) => {
+          reel.classList.add("spinning");
+          rollReel(column, isFreeSpin || isMegaSpin);
+          return window.setInterval(() => rollReel(column, isFreeSpin || isMegaSpin), 75);
+        });
+
+        for (let column = 0; column < COLUMNS; column++) {
+          await new Promise(resolve => window.setTimeout(resolve, 360));
+          window.clearInterval(reelTimers[column]);
+          reelElements[column].classList.remove("spinning");
+          renderReel(column, board);
+        }
+        reelTimers = [];
+
+        if (!isFreeSpin && !isMegaSpin) {
+          const newWilds = countWildsOnBoard(board);
+          if (newWilds > 0) {
+            wildCount = Math.min(WILD_GOAL, wildCount + newWilds);
+            if (wildCount >= WILD_GOAL) {
+              freeSpinsRemaining = 10;
+              wildCount = 0;
+              diamondCount = 0;
+              statusElement.textContent = "⭐ PARABÉNS! Você acumulou 15 Wilds e ganhou 10 GIROS GRÁTIS!";
+            }
+          }
+        }
+
+        if (isFreeSpin) {
+          const newDiamonds = countDiamondsOnBoard(board);
+          if (newDiamonds > 0) {
+            diamondCount = Math.min(DIAMOND_GOAL, diamondCount + newDiamonds);
+            if (diamondCount >= DIAMOND_GOAL && megaSpinsRemaining === 0) {
+              megaSpinsRemaining = 1;
+              freeSpinsRemaining = 0;
+              diamondCount = 0;
+              statusElement.textContent = "💎 INCRÍVEL! 8 DIAMANTES ALCANÇADOS! VOCÊ GANHOU 1 MEGA SPIN PARA O GRANDE PRÊMIO!";
+            }
+          }
+        }
+
+        const result = calculatePrize(board, isMegaSpin);
+        if (result.prize > 0) {
+          credits = Math.round((credits + result.prize) * 100) / 100;
+          result.winningCells.forEach(coord => {
+            const [r, c] = coord.split(',').map(Number);
+            const index = r + c * ROWS;
+            if (cells[index]) cells[index].classList.add("winning");
+          });
+          if (isMegaSpin) {
+            statusElement.textContent = `💥 GRANDE PRÊMIO CONQUISTADO NO MEGA SPIN: +${formatBRL(result.prize)}!`;
+          } else {
+            statusElement.textContent = (isFreeSpin ? "🎉 " : "") + `Combinação premiada: +${formatBRL(result.prize)}!`;
+          }
+        } else if (freeSpinsRemaining === 0 && wildCount < WILD_GOAL && megaSpinsRemaining === 0) {
+          statusElement.textContent = "Sem combinação nesta rodada. Tente outro giro!";
+        }
+
+        spinning = false;
+        updateControls();
+
+        if (megaSpinsRemaining > 0 || freeSpinsRemaining > 0) {
+          setTimeout(spin, 1400);
+        }
+      }
+
+      betMinus.addEventListener("click", () => setBetValue(bet - 0.10));
+      betPlus.addEventListener("click", () => setBetValue(bet + 0.10));
+
+      quickBets.forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (btn.id === "btn-min") setBetValue(MIN_BET);
+          else if (btn.id === "btn-max") setBetValue(MAX_BET);
+          else setBetValue(Number(btn.dataset.val));
+        });
+      });
+
+      betInput.addEventListener("change", () => {
+        let val = Number(betInput.value);
+        if (isNaN(val)) val = MIN_BET;
+        setBetValue(val);
+      });
+
+      spinButton.addEventListener("click", spin);
+
+      copyPixBtn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(pixKey);
+          copyPixBtn.textContent = "Copiado!";
+          setTimeout(() => copyPixBtn.textContent = "COPIAR CHAVE PIX", 2000);
+        } catch (err) {
+          copyPixBtn.textContent = "Erro ao copiar";
+        }
+      });
+
+      function updateControls() {
+        walletElement.textContent = `Saldo: ${formatBRL(credits)}`;
+        
+        const wildPct = (wildCount / WILD_GOAL) * 100;
+        wildProgressFill.style.width = `${wildPct}%`;
+        wildCountText.textContent = `${wildCount} / ${WILD_GOAL}`;
+
+        const diamondPct = (diamondCount / DIAMOND_GOAL) * 100;
+        diamondProgressFill.style.width = `${diamondPct}%`;
+        diamondCountText.textContent = `${diamondCount} / ${DIAMOND_GOAL}`;
+
+        if (megaSpinsRemaining > 0) {
+          gameContainer.className = "game mega-spin-active";
+        } else if (freeSpinsRemaining > 0) {
+          gameContainer.className = "game free-spins-active";
+        } else {
+          gameContainer.className = "game";
+        }
+
+        const isBonusActive = freeSpinsRemaining > 0 || megaSpinsRemaining > 0;
+
+        betInput.disabled = spinning || isBonusActive;
+        betMinus.disabled = spinning || bet <= MIN_BET || isBonusActive;
+        betPlus.disabled = spinning || bet >= MAX_BET || isBonusActive;
+        quickBets.forEach(btn => btn.disabled = spinning || isBonusActive);
+        
+        spinButton.disabled = spinning || !currentUser || (credits < bet && !isBonusActive);
+        
+        if (megaSpinsRemaining > 0) {
+          spinButton.textContent = "MEGA SPIN!";
+        } else if (freeSpinsRemaining > 0) {
+          spinButton.textContent = `GRÁTIS (${freeSpinsRemaining})`;
+        } else {
+          spinButton.textContent = spinning ? "GIRANDO…" : "GIRAR";
+        }
+      }
+
+      renderBoard(makeBoard());
+      updateControls();
+    })();
+  </script>
+</body>
+</html>
